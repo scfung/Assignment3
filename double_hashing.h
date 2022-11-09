@@ -8,10 +8,13 @@
 #ifndef double_hashing_h
 #define double_hashing_h
 
+namespace {
+// Internal method to return a prime number at least as large as n.
+int NextPrime(size_t n);
 
+}  // namespace
 
-
-// Quadratic probing implementation.
+// Double Hashing Implementation
 template <typename HashedObj>
 class HashTableDouble {
 public:
@@ -95,11 +98,6 @@ public:
     float getLoadFactor(){
         return static_cast<float>(numberOfElements()) / static_cast<float>(tableSize());
     }
-    
-    float averageCollisions(){
-        return numberOfCollisions() / static_cast<float>(numberOfElements());
-    }
-    
         
 private:
         struct HashEntry {

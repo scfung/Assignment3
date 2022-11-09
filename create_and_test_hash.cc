@@ -21,7 +21,6 @@ template <typename HashTableType>
 void TestFunctionForHashTable(HashTableType &hash_table,
 			      const string &words_filename,
 			      const string &query_filename) {
-    hash_table.MakeEmpty();
     //..Insert your own code
     ifstream words(words_filename), query(query_filename);
     std::string insert_line;
@@ -62,7 +61,8 @@ int testHashingWrapper(int argument_count, char **argument_list) {
         std::cout << "size_of_table: " << linear_probing_table.tableSize() << std::endl;
         std::cout << "load_factor: " << linear_probing_table.getLoadFactor() << std::endl;
         std::cout << "collisions: " << linear_probing_table.numberOfCollisions() << std::endl;
-        std::cout << "avg_collisions: " << linear_probing_table.averageCollisions() << std::endl;
+        float avg_collisions = static_cast<float>(linear_probing_table.numberOfCollisions()) / static_cast<float>(linear_probing_table.numberOfElements());
+        std::cout << "avg_collisions: " << avg_collisions << std::endl;
     }
     else if (param_flag == "quadratic") {
         HashTable<string> quadratic_probing_table;
@@ -71,7 +71,8 @@ int testHashingWrapper(int argument_count, char **argument_list) {
         std::cout << "size_of_table: " << quadratic_probing_table.tableSize() << std::endl;
         std::cout << "load_factor: " << quadratic_probing_table.getLoadFactor() << std::endl;
         std::cout << "collisions: " << quadratic_probing_table.numberOfCollisions() << std::endl;
-        std::cout << "avg_collisions: " << quadratic_probing_table.averageCollisions() << std::endl;
+        float avg_collisions = static_cast<float>(quadratic_probing_table.numberOfCollisions()) / static_cast<float>(quadratic_probing_table.numberOfElements());
+        std::cout << "avg_collisions: " << avg_collisions << std::endl;
     }
     else if (param_flag == "double") {
         cout << "r_value: " << R << endl;
@@ -82,7 +83,8 @@ int testHashingWrapper(int argument_count, char **argument_list) {
         std::cout << "size_of_table: " << double_probing_table.tableSize() << std::endl;
         std::cout << "load_factor: " << double_probing_table.getLoadFactor() << std::endl;
         std::cout << "collisions: " << double_probing_table.numberOfCollisions() << std::endl;
-        std::cout << "avg_collisions: " << double_probing_table.averageCollisions() << std::endl;
+        float avg_collisions = static_cast<float>(double_probing_table.numberOfCollisions()) / static_cast<float>(double_probing_table.numberOfElements());
+        std::cout << "avg_collisions: " << avg_collisions << std::endl;
         
     }
     else {

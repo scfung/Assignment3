@@ -120,10 +120,6 @@ public:
         return static_cast<float>(numberOfElements()) / static_cast<float>(tableSize());
     }
     
-    float averageCollisions(){
-        return numberOfCollisions() / static_cast<float>(numberOfElements());
-    }
-    
 }
 
 private:
