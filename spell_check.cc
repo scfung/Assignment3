@@ -33,11 +33,14 @@ HashTableDouble<string> MakeDictionary(const string &dictionary_file) {
 
 // For each word in the document_file, it checks the 3 cases for a word being
 // misspelled and prints out possible corrections
-void SpellChecker(const HashTableDouble<string>& dictionary, const string &document_file)
+
+
+template <typename HashTableType>
+void SpellChecker(const HashTableType& dictionary, const string &document_file)
 {
     ifstream query;
     query.open(document_file);
-    std::string insert_line;
+    std::string insert_line, output;
     while(!(query.eof()))
     {
         query>>insert_line;
@@ -59,53 +62,83 @@ void SpellChecker(const HashTableDouble<string>& dictionary, const string &docum
         if(result == true)
         {
             std::cout << insert_line << "is CORRECT" << std::endl;
+            continue;
         }
         while(result == false)
         {
             std::cout << insert_line << " is INCORRECT" << std::endl;
-            //swap, swaps two characters in the string and checks to see if the resulting string is in dictionary
-            for(int i = 0; i < insert_line.length() and result == false; i++)
+            output = Swap(dictionary, insert_line);
+            std::cout << "** " << insert_line << " -> " << output << " case C" << std::endl;
+            if(output != "Incorrect")
             {
-                std::string original = insert_line;
-                swap(insert_line[i], insert_line[i+1]);
-                std::cout << "** " << original << " -> " << insert_line << " ** case C" << std::endl;
-                if(dictionary.Contains(insert_line) == true)
-                    result = true;
-                else
-                    insert_line = original;
-                
+                result = true;
+                break;
             }
-            //add, adds a character at different indexes to see if word is valid in dictionary
-            for(int i = 0; i < insert_line.length() and result == false; i++)
+            output = Add(dictionary, insert_line);
+            std::cout << "** " << insert_line << " -> " << output << " case A" << std::endl;
+            if(output != "Incorrect")
             {
-                std::string original = insert_line;
-                for(int j = 97; j < 123; j++)
-                {
-                    insert_line.insert(i,1,(char)j);
-                    std::cout << "** " << original << " -> " << insert_line << " ** case A" << std::endl;
-                    if(dictionary.Contains(insert_line) == true)
-                        result = true;
-                    else
-                        insert_line = original;
-                }
-                    
+                result = true;
+                break;
             }
-            //remove, removes a character at different indexes to see if word is valid in dictionary
-            for(int i = 0; i < insert_line.length() and result == false; i++)
+            output = Remove(dictionary, insert_line);
+            std::cout << "** " << insert_line << " -> " << output << " case B" << std::endl;
+            if(output != "Incorrect")
             {
-                std::string original = insert_line;
-                insert_line.erase(i,1);
-                std::cout << "** " << original << " -> " << insert_line << " ** case B" << std::endl;
-                if(dictionary.Contains(insert_line) == true)
-                    result = true;
-                else
-                    insert_line = original;
+                result = true;
+                break;
             }
+            else
+                break;
         }
     }
 }
 
+template <typename HashTableType>
+std::string Swap(HashTableType &hash_table, std::string changed_word)
+{
+    std::string original = changed_word;
+    for(int i = 0; i < changed_word.length(); i++)
+    {
+        std::swap(changed_word[i], changed_word[i+1]);
+        if(hash_table.Contains(changed_word) == true)
+            return changed_word;
+        changed_word = original;
+    }
+    return "Incorrect";
+}
 
+template <typename HashTableType>
+std::string Add(HashTableType &hash_table, std::string changed_word)
+{
+    std::string original = changed_word;
+    for(int i = 0; i < changed_word.length(); i++)
+    {
+        for(int j = 97; j < 123; j++)
+        {
+            changed_word.insert(i, 1, (char)j);
+            if(hash_table.Contains(changed_word) == true)
+                return changed_word;
+            changed_word = original;
+        }
+    }
+    return "Incorrect";
+}
+
+template <typename HashTableType>
+std::string Remove(HashTableType &hash_table, std::string changed_word)
+{
+    std::string original = changed_word;
+    for(int i = 0; i < changed_word.length(); i++)
+    {
+        changed_word.erase(i, 1);
+        if(hash_table.Contains(changed_word) == true)
+            return changed_word;
+        changed_word = original;
+    }
+    
+    return "Incorrect";
+}
 // @argument_count: same as argc in main
 // @argument_list: save as argv in main.
 // Implements

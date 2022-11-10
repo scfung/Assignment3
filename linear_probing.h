@@ -9,7 +9,7 @@
 #define linear_probing_h
 
 #include <algorithm>
-#include <string>
+#include <iostream>
 #include <vector>
 #include <functional>
 #include "quadratic_probing.h"

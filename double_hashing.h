@@ -107,7 +107,7 @@ private:
         size_t current_size_;
         mutable size_t collisions = 0;
         mutable size_t probes;
-        size_t R = 55;
+        size_t R = 89;
         
         bool IsActive(size_t current_pos) const
         { return array_[current_pos].info_ == ACTIVE; }
@@ -118,7 +118,8 @@ private:
         size_t offset = count*(R-(hf(x) % R));
         size_t current_pos = InternalHash(x);
             
-        while (array_[current_pos].info_ != EMPTY && array_[current_pos].element_ != x) {
+        while (array_[current_pos].info_ != EMPTY && array_[current_pos].element_ != x)
+        {
             current_pos += offset;
             ++collisions;
             count++;

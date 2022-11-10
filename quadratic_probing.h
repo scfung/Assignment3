@@ -5,7 +5,7 @@
 #include <vector>
 #include <algorithm>
 #include <functional>
-
+#include <iostream>
 
 namespace {
 
@@ -134,7 +134,7 @@ private:
 
     std::vector<HashEntry> array_;
     size_t current_size_;
-    mutable size_t collisions = 0;
+    mutable size_t collisions;
     mutable size_t probes;
 
     bool IsActive(size_t current_pos) const
@@ -148,7 +148,7 @@ private:
         while (array_[current_pos].info_ != EMPTY && array_[current_pos].element_ != x) {
             current_pos += offset;  // Compute ith probe.
             offset += 2;
-            ++collisions;
+            collisions++;
             if (current_pos >= array_.size())
                 current_pos -= array_.size();
         }
