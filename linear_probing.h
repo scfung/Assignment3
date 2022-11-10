@@ -126,7 +126,7 @@ private:
             }
         }
         probes = std::move(offset);
-        offset = 0;
+        offset = 1;
         return current_pos;
     }
     void Rehash() {

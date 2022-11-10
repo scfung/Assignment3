@@ -61,7 +61,7 @@ void SpellChecker(const HashTableType& dictionary, const string &document_file)
         result = dictionary.Contains(insert_line);
         if(result == true)
         {
-            std::cout << insert_line << "is CORRECT" << std::endl;
+            std::cout << insert_line << " is CORRECT" << std::endl;
             continue;
         }
         while(result == false)
