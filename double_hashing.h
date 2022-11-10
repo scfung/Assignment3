@@ -29,7 +29,7 @@ public:
     void MakeEmpty() {
         current_size_ = 0;
         collisions = 0;
-        probes = 0;
+        probes = 1;
         for (auto & entry : array_)
             entry.info_ = EMPTY;
     }
@@ -106,7 +106,7 @@ private:
         std::vector<HashEntry> array_;
         size_t current_size_;
         mutable size_t collisions = 0;
-        mutable size_t probes;
+        mutable size_t probes = 1;
         size_t R = 89;
         
         bool IsActive(size_t current_pos) const
@@ -123,10 +123,10 @@ private:
             current_pos += offset;
             ++collisions;
             count++;
+            probes++;
             if(current_pos >= array_.size())
                 current_pos -= array_.size();
         }
-        probes = std::move(offset);
         offset = 0;
         return current_pos;
     }

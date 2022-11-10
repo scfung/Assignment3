@@ -48,7 +48,7 @@ void SpellChecker(const HashTableType& dictionary, const string &document_file)
         {
             if(ispunct(insert_line[i]))
             {
-                insert_line.erase(i--, 1);
+                insert_line.erase(i--, i);
             }
         }
         

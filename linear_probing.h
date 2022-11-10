@@ -31,7 +31,7 @@ public:
     void MakeEmpty() {
         current_size_ = 0;
         collisions = 0;
-        probes = 0;
+        probes = 1;
         for (auto & entry : array_)
             entry.info_ = EMPTY;
     }
