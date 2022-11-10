@@ -98,7 +98,7 @@ std::string Swap(HashTableType &hash_table, std::string changed_word)
     for(int i = 0; i < changed_word.length(); i++)
     {
         std::swap(changed_word[i], changed_word[i+1]);
-        std::cout << "** " << original << " -> " << changed_word << " case C" << std::endl;
+        std::cout << "** " << original << " -> " << changed_word << " ** case C" << std::endl;
         if(hash_table.Contains(changed_word) == true)
             return changed_word;
         changed_word = original;
@@ -116,7 +116,7 @@ std::string Add(HashTableType &hash_table, std::string changed_word)
         for(int j = 97; j < 123; j++)
         {
             changed_word.insert(i, 1, (char)j);
-            std::cout << "** " << original << " -> " << changed_word << " case A" << std::endl;
+            std::cout << "** " << original << " -> " << changed_word << " ** case A" << std::endl;
             if(hash_table.Contains(changed_word) == true)
                 return changed_word;
             changed_word = original;
@@ -132,7 +132,7 @@ std::string Remove(HashTableType &hash_table, std::string changed_word)
     for(int i = 0; i < changed_word.length(); i++)
     {
         changed_word.erase(i, 1);
-        std::cout << "** " << original << " -> " << changed_word << " case B" << std::endl;
+        std::cout << "** " << original << " -> " << changed_word << " ** case B" << std::endl;
         if(hash_table.Contains(changed_word) == true)
             return changed_word;
         changed_word = original;
