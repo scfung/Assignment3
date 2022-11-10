@@ -1,4 +1,4 @@
-// YOUR NAME.
+// Stanley Fung
 // spell_check.cc: A simple spell checker.
 
 #include <fstream>
@@ -37,7 +37,7 @@ void SpellChecker(const HashTable<string>& dictionary, const string &document_fi
 {
     ifstream query;
     query.open(document_file);
-    std::string insert_line, current;
+    std::string insert_line;
     while(!(query.eof()))
     {
         query>>insert_line;
@@ -63,7 +63,7 @@ void SpellChecker(const HashTable<string>& dictionary, const string &document_fi
         while(result == false)
         {
             std::cout << insert_line << " is INCORRECT" << std::endl;
-            //swap
+            //swap, swaps two characters in the string and checks to see if the resulting string is in dictionary
             for(int i = 0; i < insert_line.length() and result == false; i++)
             {
                 std::string original = insert_line;
@@ -72,10 +72,10 @@ void SpellChecker(const HashTable<string>& dictionary, const string &document_fi
                 if(dictionary.Contains(insert_line) == true)
                     result = true;
                 else
-                    swap(insert_line[i], insert_line[i+1]);
+                    insert_line = original;
                 
             }
-            //add
+            //add, adds a character at different indexes to see if word is valid in dictionary
             for(int i = 0; i < insert_line.length() and result == false; i++)
             {
                 std::string original = insert_line;
@@ -90,7 +90,7 @@ void SpellChecker(const HashTable<string>& dictionary, const string &document_fi
                 }
                     
             }
-            //remove
+            //remove, removes a character at different indexes to see if word is valid in dictionary
             for(int i = 0; i < insert_line.length() and result == false; i++)
             {
                 std::string original = insert_line;
