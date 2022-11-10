@@ -33,17 +33,23 @@ HashTableDouble<string> MakeDictionary(const string &dictionary_file) {
 
 // For each word in the document_file, it checks the 3 cases for a word being
 // misspelled and prints out possible corrections
-void SpellChecker(const HashTableDouble<string>& dictionary, const string &document_file) {
+void SpellChecker(const HashTableDouble<string>& dictionary, const string &document_file)
+{
     ifstream query(document_file);
     std::string insert_line;
     
-    while(query >> insert_line){
-        for(int i = 0; i < insert_line.length(); i++){
-            if(isalpha(insert_line[i])){
+    while(query >> insert_line)
+    {
+        for(int i = 0; i < insert_line.length(); i++)
+        {
+            if(isalpha(insert_line[i]))
+            {
                 insert_line[i] = tolower(insert_line[i]);
             }
-            else if('\'' == insert_line[i]){
-                while(i < insert_line.length()){
+            else if('\'' == insert_line[i])
+            {
+                while(i < insert_line.length())
+                {
                     insert_line.erase(insert_line.begin()+i);
                 }
             }

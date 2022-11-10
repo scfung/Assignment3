@@ -73,25 +73,25 @@ class HashTableLinear{
         if(!IsActive(current_pos)){
             return false;
         }
-        array_[current_pos].info = DELETED;
+        array_[current_pos].info_ = DELETED;
         return true;
     }
     
-    int numberOfElements(){
-        return static_cast<int>(current_size_);
+    size_t numberOfElements(){
+        return current_size_;
     }
     
-    int tableSize(){
+    size_t tableSize(){
         return array_.capacity();
     }
     
-    int numberOfCollisions(){
+    size_t numberOfCollisions(){
         return collisions;
     }
     
-    int numberOfProbes(const HashedObj &x) const{
-        int probeNumber = 1;
-        int currentPosition = InternalHash(x);
+    size_t numberOfProbes(const HashedObj &x) const{
+        size_t probeNumber = 1;
+        size_t currentPosition = InternalHash(x);
         
         while(array_[currentPosition].info_ != EMPTY and array_[currentPosition].element_ != x){
             ++probeNumber;
@@ -122,7 +122,7 @@ private:
 
     std::vector<HashEntry> array_;
     size_t current_size_;
-    mutable int collisions = 0;
+    mutable size_t collisions = 0;
     
     
     bool IsActive(size_t current_pos) const
@@ -136,6 +136,7 @@ private:
             ++collisions;
             //current_pos += offset;  // Compute ith probe.
             //offset += 2;
+            current_pos += 1;
             if (current_pos >= array_.size())
                 current_pos -= array_.size();
             }
@@ -152,9 +153,9 @@ private:
    
    // Copy table over.
         current_size_ = 0;
-   for (auto & entry :old_array)
-       if (entry.info_ == ACTIVE)
-           Insert(std::move(entry.element_));
+        for (auto & entry :old_array)
+            if (entry.info_ == ACTIVE)
+                Insert(std::move(entry.element_));
  }
  
  size_t InternalHash(const HashedObj & x) const {

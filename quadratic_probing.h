@@ -95,18 +95,18 @@ public:
         return true;
     }
     
-    int numberOfElements(){ return current_size_;}
+    size_t numberOfElements(){ return current_size_;}
     
-    int tableSize(){return array_.capacity();}
+    size_t tableSize(){return array_.capacity();}
     
-    int numberOfProbes(const HashedObj &x) const{
-        int offset = 1;
-        int currentPosition = InternalHash(x);
-        int numberProbes = 1;
+    size_t numberOfProbes(const HashedObj &x) const{
+        size_t offset = 1;
+        size_t currentPosition = InternalHash(x);
+        size_t numberProbes = 1;
         
         while(array_[currentPosition].info_ != EMPTY and array_[currentPosition].element_ != x){
             ++numberProbes;
-            currentPosition = offset;
+            currentPosition += offset;
             offset += 2;
             if(currentPosition >= array_.size()){
                 currentPosition -= array_.size();
@@ -115,7 +115,7 @@ public:
         return numberProbes;
     }
     
-    int numberOfCollisions(){return collisions;}
+    size_t numberOfCollisions(){return collisions;}
         
     float getLoadFactor(){
         return static_cast<float>(numberOfElements()) / static_cast<float>(tableSize());
@@ -138,7 +138,7 @@ private:
 
     std::vector<HashEntry> array_;
     size_t current_size_;
-    mutable int collisions = 0;
+    mutable size_t collisions = 0;
 
     bool IsActive(size_t current_pos) const
     { return array_[current_pos].info_ == ACTIVE; }
@@ -153,7 +153,7 @@ private:
             offset += 2;
             if (current_pos >= array_.size())
                 current_pos -= array_.size();
-            }
+        }
         return current_pos;
   }
 

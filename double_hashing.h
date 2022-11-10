@@ -9,6 +9,8 @@
 #define double_hashing_h
 
 #include <vector>
+#include <algorithm>
+#include <functional>
 
 namespace {
 // Internal method to return a prime number at least as large as n.
@@ -75,25 +77,25 @@ public:
         return true;
     }
     
-    int numberOfElements(){return current_size_;}
+    size_t numberOfElements(){return current_size_;}
     
-    int tableSize(){return array_.capacity();}
+    size_t tableSize(){return array_.capacity();}
     
-    int numberOfProbes(const HashedObj &x) const{
-        int offset = 1;
-        int starting_pos = InternalHash(x);
-        int probe = starting_pos;
-        int number_of_probes = 1;
+    size_t numberOfProbes(const HashedObj &x) const{
+        size_t i = 1;
+        size_t starting_pos = InternalHash(x);
+        size_t probe = starting_pos;
+        size_t number_of_probes = 1;
         
         while(array_[probe].info_ != EMPTY and array_[probe].element_ != x){
             ++number_of_probes;
-            probe = (starting_pos + (offset * InternalHash2(x))) % array_.capacity();
-            ++offset;
+            probe = (starting_pos + (i * InternalHash2(x))) % array_.capacity();
+            ++i;
         }
         return number_of_probes;
     }
     
-    int numberOfCollisions(){
+    size_t numberOfCollisions(){
         return collisions;
     }
     
@@ -116,7 +118,7 @@ private:
         
         std::vector<HashEntry> array_;
         size_t current_size_;
-        mutable int collisions = 0;
+        mutable size_t collisions = 0;
         size_t R = 73;
         
         bool IsActive(size_t current_pos) const
