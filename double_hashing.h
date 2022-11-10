@@ -17,15 +17,19 @@
 template <typename HashedObj>
 class HashTableDouble {
 public:
+    //Used to determine the status of an element in the hash table.
     enum EntryType {ACTIVE, EMPTY, DELETED};
     
+    //Constructs a hashtable with size 101 and inititalizes the values with MakeEmpty() function
     explicit HashTableDouble(size_t size = 101) : array_(NextPrime(size))
     { MakeEmpty(); }
     
+    //Determines if a element is in the hash table or not.
     bool Contains(const HashedObj & x) const {
         return IsActive(FindPos(x));
     }
     
+    //Empties hash table and sets values back to default
     void MakeEmpty() {
         current_size_ = 0;
         collisions = 0;
@@ -33,7 +37,7 @@ public:
         for (auto & entry : array_)
             entry.info_ = EMPTY;
     }
-    
+    //Inserts L-value element into the hash table
     bool Insert(const HashedObj & x) {
         // Insert x as active
         size_t current_pos = FindPos(x);
@@ -49,6 +53,7 @@ public:
         return true;
     }
     
+    //Inserts R-value element into the hash table.
     bool Insert(HashedObj && x) {
         // Insert x as active
         size_t current_pos = FindPos(x);
@@ -74,18 +79,23 @@ public:
         return true;
     }
     
+    //Used to find the number of elements in hash table
     size_t numberOfElements(){return current_size_;}
     
+    //Used to find the size of the whole table
     size_t tableSize(){return array_.size();}
     
+    //Finds the number of probes needed to place a value in the hash table
     size_t numberOfProbes(){
         return probes;
     }
     
+    //Finds the number of collisions needed to place a value in the hash table
     size_t numberOfCollisions(){
         return collisions;
     }
     
+    //Checks how full the table is, relative to the table's size
     float getLoadFactor(){
         return static_cast<float>(current_size_) / static_cast<float>(array_.size());
     }

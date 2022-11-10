@@ -15,7 +15,7 @@ using namespace std;
 // You can add more functions here.
 
 // Creates and fills double hashing hash table with all words from
-// dictionary_file
+// dictionary_file, using ifstream library
 
 HashTableDouble<string> MakeDictionary(const string &dictionary_file) {
     HashTableDouble<string> dictionary_hash;
@@ -33,8 +33,6 @@ HashTableDouble<string> MakeDictionary(const string &dictionary_file) {
 
 // For each word in the document_file, it checks the 3 cases for a word being
 // misspelled and prints out possible corrections
-
-
 template <typename HashTableType>
 void SpellChecker(const HashTableType& dictionary, const string &document_file)
 {
@@ -92,6 +90,7 @@ void SpellChecker(const HashTableType& dictionary, const string &document_file)
 }
 
 template <typename HashTableType>
+//Swaps two characters in the given incorrect word and tests to see if the changed word is in the dictionary
 std::string Swap(HashTableType &hash_table, std::string changed_word)
 {
     std::string original = changed_word;
@@ -107,6 +106,7 @@ std::string Swap(HashTableType &hash_table, std::string changed_word)
   
 }
 
+//Adds a character to the given incorrect word and tests to see if the changed word is in the dictionary
 template <typename HashTableType>
 std::string Add(HashTableType &hash_table, std::string changed_word)
 {
@@ -125,6 +125,7 @@ std::string Add(HashTableType &hash_table, std::string changed_word)
     return "Incorrect";
 }
 
+//Removs a character to the given incorrect word and tests to see if the changed word is in the dictionary
 template <typename HashTableType>
 std::string Remove(HashTableType &hash_table, std::string changed_word)
 {

@@ -31,7 +31,7 @@ public:
     void MakeEmpty() {
         current_size_ = 0;
         collisions = 0;
-        probes = 1;
+        probes = 0;
         for (auto & entry : array_)
             entry.info_ = EMPTY;
     }
@@ -76,16 +76,20 @@ public:
         return true;
     }
     
+    //Used to find the number of elements in hash table
     size_t numberOfElements(){ return current_size_;}
     
+    //Used to find the size of the whole table
     size_t tableSize(){return array_.size();}
     
+    //Finds the number of probes needed to place a value in the hash table
     size_t numberOfProbes(){
         return probes;
     }
-    
+    //Finds the number of collisions that occurred while finding
     size_t numberOfCollisions(){return collisions;}
-        
+    
+    //Checks how full the table is, relative to the table's size
     float getLoadFactor(){
         return static_cast<float>(current_size_) / static_cast<float>(array_.size());
     }
@@ -125,7 +129,7 @@ private:
                 current_pos -= array_.size();
             }
         }
-        probes = offset;
+        probes = std::move(offset);
         offset = 1;
         return current_pos;
     }
