@@ -18,24 +18,29 @@ template <typename HashedObj>
 
 class HashTableLinear{
 public:
+    //Used to determine the status of an element in the hash table.
     enum EntryType {ACTIVE, EMPTY, DELETED};
     
+    //Constructs a hashtable with size 101 and inititalizes the values with MakeEmpty() function
     explicit HashTableLinear(size_t size = 101) : array_(NextPrime(size)){
         MakeEmpty();
     }
     
+    //Determines if a element is in the hash table or not.
     bool Contains(const HashedObj & x) const {
         return IsActive(FindPos(x));
     }
     
+    //Empties hash table and sets values back to default
     void MakeEmpty() {
         current_size_ = 0;
         collisions = 0;
-        probes = 0;
+        probe_num = 1;
         for (auto & entry : array_)
             entry.info_ = EMPTY;
     }
     
+    //Inserts L-value element into the hash table
     bool Insert(const HashedObj & x) {
         // Insert x as active
         size_t current_pos = FindPos(x);
@@ -51,6 +56,7 @@ public:
         return true;
     }
     
+    //Inserts R-value element into the hash table.
     bool Insert(HashedObj && x) {
         // Insert x as active
         size_t current_pos = FindPos(x);
@@ -67,6 +73,7 @@ public:
         return true;
     }
     
+    //Removes element from the hash table
     bool Remove(const HashedObj & x) {
         size_t current_pos = FindPos(x);
         if (!IsActive(current_pos))
@@ -84,7 +91,7 @@ public:
     
     //Finds the number of probes needed to place a value in the hash table
     size_t numberOfProbes(){
-        return probes;
+        return probe_num;
     }
     //Finds the number of collisions that occurred while finding
     size_t numberOfCollisions(){return collisions;}
@@ -95,6 +102,7 @@ public:
     }
     
 private:
+    //Created to deal with elements that are put in the hash table
     struct HashEntry {
         HashedObj element_;
         EntryType info_;
@@ -110,8 +118,9 @@ private:
     std::vector<HashEntry> array_;
     size_t current_size_;
     mutable size_t collisions = 0;
-    mutable size_t probes = 1;
-
+    mutable size_t probe_num = 1;
+    
+    //Checks if the an element is currently in the hash table
     bool IsActive(size_t current_pos) const
     { return array_[current_pos].info_ == ACTIVE; }
     
@@ -130,10 +139,11 @@ private:
                 current_pos -= array_.size();
             }
         }
-        probes = std::move(offset);
+        probe_num = count;
         offset = 1;
         return current_pos;
     }
+    //Rehashes the hash table
     void Rehash() {
         std::vector<HashEntry> old_array = array_;
 
@@ -148,7 +158,7 @@ private:
             if (entry.info_ == ACTIVE)
                 Insert(std::move(entry.element_));
     }
-  
+    //Internal Hash function to help find a place for an element to be put in the hash table
     size_t InternalHash(const HashedObj & x) const {
         static std::hash<HashedObj> hf;
         return hf(x) % array_.size( );

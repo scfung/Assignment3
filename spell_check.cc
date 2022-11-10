@@ -7,6 +7,7 @@
 #include <iterator>
 #include <cstdlib>
 #include <cctype>
+#include <sstream>
 
 // You can change to quadratic probing if you
 // haven't implemented double hashing.
@@ -42,17 +43,17 @@ void SpellChecker(const HashTableType& dictionary, const string &document_file)
     while(!(query.eof()))
     {
         query>>insert_line;
-        for(int i = 0; i < insert_line.size(); i++)
-        {
-            if(ispunct(insert_line[i]))
-            {
-                insert_line.erase(i--, i);
-            }
-        }
-        
+        //Makes the word lowercase
         for(int i = 0; i < insert_line.size(); i++)
         {
             insert_line[i] = tolower(insert_line[i]);
+        }
+        //Checks if given word is valid or not
+        for(int i = 0; i < insert_line.size(); i++)
+        {
+            if(insert_line.length()-1, !isalpha(insert_line[i]), !isdigit(insert_line[i])){
+                insert_line.erase(i, 1);
+            }
         }
         
         bool result = false;
@@ -62,6 +63,7 @@ void SpellChecker(const HashTableType& dictionary, const string &document_file)
             std::cout << insert_line << " is CORRECT" << std::endl;
             continue;
         }
+        //Runs the word through Swap, Add, and Remove and stops when a word that matches a word in the dictionary is found
         while(result == false)
         {
             std::cout << insert_line << " is INCORRECT" << std::endl;

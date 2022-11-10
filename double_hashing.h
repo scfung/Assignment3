@@ -33,7 +33,7 @@ public:
     void MakeEmpty() {
         current_size_ = 0;
         collisions = 0;
-        probes = 1;
+        probe_num = 1;
         for (auto & entry : array_)
             entry.info_ = EMPTY;
     }
@@ -70,6 +70,7 @@ public:
         return true;
     }
     
+    //Removes element from the hash table
     bool Remove(const HashedObj & x) {
         size_t current_pos = FindPos(x);
         if (!IsActive(current_pos))
@@ -87,7 +88,7 @@ public:
     
     //Finds the number of probes needed to place a value in the hash table
     size_t numberOfProbes(){
-        return probes;
+        return probe_num;
     }
     
     //Finds the number of collisions needed to place a value in the hash table
@@ -101,6 +102,7 @@ public:
     }
         
 private:
+    //Created to deal with elements that are put in the hash table
         struct HashEntry {
             HashedObj element_;
             EntryType info_;
@@ -116,12 +118,14 @@ private:
         std::vector<HashEntry> array_;
         size_t current_size_;
         mutable size_t collisions = 0;
-        mutable size_t probes = 1;
+        mutable size_t probe_num = 1;
         size_t R = 89;
         
+    //Checks if the an element is currently in the hash table
         bool IsActive(size_t current_pos) const
         { return array_[current_pos].info_ == ACTIVE; }
-    // Linear Probing
+    
+    // Double Hashing, has another hash function in function, in addition to InternalHash
     size_t FindPos(const HashedObj & x) const {
         static std::hash<HashedObj> hf;
         size_t count = 1;
@@ -136,11 +140,12 @@ private:
             if(current_pos >= array_.size())
                 current_pos -= array_.size();
         }
-        probes = count;
+        probe_num = count;
         offset = 0;
         return current_pos;
     }
-        
+    
+    //Rehashes the hash table
         void Rehash() {
             std::vector<HashEntry> old_array = array_;
             
@@ -155,7 +160,7 @@ private:
                 if (entry.info_ == ACTIVE)
                     Insert(std::move(entry.element_));
         }
-        
+        //Internal Hash function to help find a place for an element to be put in the hash table
         size_t InternalHash(const HashedObj & x) const {
             static std::hash<HashedObj> hf;
             return hf(x) % array_.size( );

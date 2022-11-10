@@ -10,9 +10,6 @@
 
 using namespace std;
 
-
-// You can add more functions here
-
 // @hash_table: a hash table (can be linear, quadratic, or double)
 // @words_filename: a filename of input words to construct the hash table
 // @query_filename: a filename of input words to test the hash table
@@ -24,14 +21,14 @@ void TestFunctionForHashTable(HashTableType &hash_table,
     ifstream words;
     words.open(words_filename);
     std::string insert_line;
-    
+    //Creates the hash_table with the words file
     while(!(words.eof()))
     {
         words>>insert_line;
         hash_table.Insert(insert_line);
     }
     
-    std::cout << "number_of_elements: " << hash_table.numberOfElements() << std::endl;
+        std::cout << "number_of_elements: " << hash_table.numberOfElements() << std::endl;
      std::cout << "size_of_table: " << hash_table.tableSize() << std::endl;
      std::cout << "load_factor: " << hash_table.getLoadFactor() << std::endl;
      std::cout << "collisions: " << hash_table.numberOfCollisions() << std::endl;
@@ -43,6 +40,7 @@ void TestFunctionForHashTable(HashTableType &hash_table,
     insert_line = "";
     ifstream query;
     query.open(query_filename);
+    //Tests the hash table
     while(!(query.eof()))
     {
         query>>insert_line;
@@ -53,7 +51,6 @@ void TestFunctionForHashTable(HashTableType &hash_table,
             std::cout << insert_line << " Not_Found " << hash_table.numberOfProbes() << std::endl;
         }
     }
-    
 }
 
 // @argument_count: argc as provided in main
@@ -68,24 +65,23 @@ int testHashingWrapper(int argument_count, char **argument_list) {
 	const string rvalue(argument_list[4]);
 	R = stoi(rvalue);
     }
-
+    //Uses linear probing to construct and test the hash table
     if (param_flag == "linear") {
       // Uncomment below when you have implemented linear probing.
         HashTableLinear<string> linear_probing_table;
         TestFunctionForHashTable(linear_probing_table, words_filename, query_filename);
-
     }
+    //Uses quadratic probing to construct and test the hash table
     else if (param_flag == "quadratic") {
         HashTable<string> quadratic_probing_table;
-      TestFunctionForHashTable(quadratic_probing_table, words_filename, query_filename);
-        
+        TestFunctionForHashTable(quadratic_probing_table, words_filename, query_filename);
     }
+    //Uses double hashing to construct and test the hash table
     else if (param_flag == "double") {
         cout << "r_value: " << R << endl;
         // Uncomment below when you have implemented double hashing.
         HashTableDouble<string> double_probing_table;
         TestFunctionForHashTable(double_probing_table, words_filename, query_filename);
-        
     }
     else {
         cout << "Unknown tree type " << param_flag << " (User should provide linear, quadratic, or double)" << endl;
