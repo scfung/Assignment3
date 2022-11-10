@@ -30,10 +30,6 @@ void TestFunctionForHashTable(HashTableType &hash_table,
         words>>insert_line;
         hash_table.Insert(insert_line);
     }
-    insert_line = "";
-    ifstream query;
-    query.open(query_filename);
-    
     std::cout << std::endl;
     
     std::cout << "number_of_elements: " << hash_table.numberOfElements() << std::endl;
@@ -43,6 +39,11 @@ void TestFunctionForHashTable(HashTableType &hash_table,
      float avg_collisions = static_cast<float>(hash_table.numberOfCollisions()) / static_cast<float>(hash_table.numberOfElements());
      std::cout << "avg_collisions: " << avg_collisions << std::endl;
     
+    std::cout << std::endl;
+    
+    insert_line = "";
+    ifstream query;
+    query.open(query_filename);
     while(!(query.eof()))
     {
         query>>insert_line;

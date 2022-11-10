@@ -143,7 +143,7 @@ private:
     //Finds a place 
     size_t FindPos(const HashedObj & x) const {
         size_t offset = 1;
-        size_t count;
+        size_t count = 1;
         size_t current_pos = InternalHash(x);
       
         while (array_[current_pos].info_ != EMPTY && array_[current_pos].element_ != x) {
