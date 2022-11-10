@@ -51,7 +51,7 @@ void SpellChecker(const HashTableType& dictionary, const string &document_file)
         //Checks if given word is valid or not
         for(int i = 0; i < insert_line.size(); i++)
         {
-            if(insert_line.length()-1, !isalpha(insert_line[i]), !isdigit(insert_line[i])){
+            if(i == insert_line.length()-1 and !isalpha(insert_line[i]) and !isdigit(insert_line[i])){
                 insert_line.erase(i, 1);
             }
         }
