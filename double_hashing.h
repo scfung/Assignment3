@@ -28,6 +28,8 @@ public:
     
     void MakeEmpty() {
         current_size_ = 0;
+        collisions = 0;
+        probes = 0;
         for (auto & entry : array_)
             entry.info_ = EMPTY;
     }
@@ -105,7 +107,7 @@ private:
         size_t current_size_;
         mutable size_t collisions = 0;
         mutable size_t probes;
-        size_t R = 73;
+        size_t R = 55;
         
         bool IsActive(size_t current_pos) const
         { return array_[current_pos].info_ == ACTIVE; }
@@ -117,13 +119,14 @@ private:
         size_t current_pos = InternalHash(x);
             
         while (array_[current_pos].info_ != EMPTY && array_[current_pos].element_ != x) {
-            ++collisions;
             current_pos += offset;
+            ++collisions;
             count++;
             if(current_pos >= array_.size())
                 current_pos -= array_.size();
         }
         probes = std::move(offset);
+        offset = 0;
         return current_pos;
     }
         

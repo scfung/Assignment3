@@ -139,9 +139,9 @@ private:
         size_t current_pos = InternalHash(x);
       
         while (array_[current_pos].info_ != EMPTY && array_[current_pos].element_ != x) {
-            ++collisions;
             current_pos += offset;  // Compute ith probe.
             offset += 2;
+            ++collisions;
             if (current_pos >= array_.size())
                 current_pos -= array_.size();
         }

@@ -30,6 +30,8 @@ public:
     
     void MakeEmpty() {
         current_size_ = 0;
+        collisions = 0;
+        probes = 0;
         for (auto & entry : array_)
             entry.info_ = EMPTY;
     }
@@ -113,10 +115,10 @@ private:
         size_t offset = 1;
         size_t current_pos = InternalHash(x);
     
-        while(this->array_[current_pos].info_ != EMPTY and array_[current_pos].element_ != x)
+        while(array_[current_pos].info_ != EMPTY and array_[current_pos].element_ != x)
         {
             current_pos += offset;
-            this->collisions++;
+            collisions++;
             offset++;
             if(current_pos >= array_.size())
             {
