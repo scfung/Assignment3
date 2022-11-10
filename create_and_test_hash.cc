@@ -30,7 +30,6 @@ void TestFunctionForHashTable(HashTableType &hash_table,
         words>>insert_line;
         hash_table.Insert(insert_line);
     }
-    std::cout << std::endl;
     
     std::cout << "number_of_elements: " << hash_table.numberOfElements() << std::endl;
      std::cout << "size_of_table: " << hash_table.tableSize() << std::endl;

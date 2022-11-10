@@ -110,7 +110,7 @@ private:
     std::vector<HashEntry> array_;
     size_t current_size_;
     mutable size_t collisions = 0;
-    mutable size_t probes;
+    mutable size_t probes = 1;
 
     bool IsActive(size_t current_pos) const
     { return array_[current_pos].info_ == ACTIVE; }
@@ -118,12 +118,13 @@ private:
     size_t FindPos(const HashedObj &x) const{
         size_t offset = 1;
         size_t current_pos = InternalHash(x);
-    
+        size_t count = 1;
         while(array_[current_pos].info_ != EMPTY and array_[current_pos].element_ != x)
         {
             current_pos += offset;
             collisions++;
             offset++;
+            count++;
             if(current_pos >= array_.size())
             {
                 current_pos -= array_.size();
