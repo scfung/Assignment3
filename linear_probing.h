@@ -12,7 +12,7 @@
 #include <string>
 #include <vector>
 #include <functional>
-#include <sstream>
+
 namespace {
 
 // Internal method to return a prime number at least as large as n.
@@ -132,16 +132,17 @@ private:
         //size_t offset = 1;
         size_t current_pos = InternalHash(x);
      
-        while (array_[current_pos].info_ != EMPTY && array_[current_pos].element_ != x) {
+        while (array_[current_pos].info_ != EMPTY && array_[current_pos].element_ != x)
+        {
             ++collisions;
             //current_pos += offset;  // Compute ith probe.
             //offset += 2;
             current_pos += 1;
             if (current_pos >= array_.size())
                 current_pos -= array_.size();
-            }
+        }
         return current_pos;
- }
+    }
 
     void Rehash() {
         std::vector<HashEntry> old_array = array_;
@@ -156,12 +157,12 @@ private:
         for (auto & entry :old_array)
             if (entry.info_ == ACTIVE)
                 Insert(std::move(entry.element_));
- }
+    }
  
- size_t InternalHash(const HashedObj & x) const {
+    size_t InternalHash(const HashedObj & x) const {
      static std::hash<HashedObj> hf;
      return hf(x) % array_.size( );
- }
+    }
 };
 
 

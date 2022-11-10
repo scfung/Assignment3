@@ -55,7 +55,6 @@ int testHashingWrapper(int argument_count, char **argument_list) {
 
     if (param_flag == "linear") {
       // Uncomment below when you have implemented linear probing.
-        
         HashTableLinear<string> linear_probing_table;
         std::cout << "number_of_elements: " << linear_probing_table.numberOfElements() << std::endl;
         std::cout << "size_of_table: " << linear_probing_table.tableSize() << std::endl;
