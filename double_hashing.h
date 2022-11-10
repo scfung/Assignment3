@@ -8,6 +8,8 @@
 #ifndef double_hashing_h
 #define double_hashing_h
 
+#include <vector>
+
 namespace {
 // Internal method to return a prime number at least as large as n.
 int NextPrime(size_t n);
