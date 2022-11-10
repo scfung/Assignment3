@@ -27,7 +27,7 @@ void TestFunctionForHashTable(HashTableType &hash_table,
     
     while(words >> insert_line){
         if(insert_line.length() > 0){
-            hash_table.insert(insert_line);
+            hash_table.Insert(insert_line);
         }
     }
     while(query >> insert_line){

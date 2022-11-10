@@ -138,7 +138,7 @@ private:
 
     std::vector<HashEntry> array_;
     size_t current_size_;
-    size_t collisions = 0;
+    mutable int collisions = 0;
 
     bool IsActive(size_t current_pos) const
     { return array_[current_pos].info_ == ACTIVE; }

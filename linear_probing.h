@@ -30,7 +30,7 @@ class HashTableLinear{
     }
     
     bool Contains(const HashedObj & x){
-        return IsActive(findPos(x));
+        return IsActive(FindPos(x));
     }
     
     void MakeEmpty(){
@@ -122,7 +122,7 @@ private:
 
     std::vector<HashEntry> array_;
     size_t current_size_;
-    int collisions = 0;
+    mutable int collisions = 0;
     
     
     bool IsActive(size_t current_pos) const
