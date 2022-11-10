@@ -47,13 +47,6 @@ void TestFunctionForHashTable(HashTableType &hash_table,
         }
     }
     
-    std::cout << "number_of_elements: " << hash_table.numberOfElements() << std::endl;
-    std::cout << "size_of_table: " << hash_table.tableSize() << std::endl;
-    std::cout << "load_factor: " << hash_table.getLoadFactor() << std::endl;
-    std::cout << "collisions: " << hash_table.numberOfCollisions() << std::endl;
-    float avg_collisions = static_cast<float>(hash_table.numberOfCollisions()) / static_cast<float>(hash_table.numberOfElements());
-    std::cout << "avg_collisions: " << avg_collisions << std::endl;
-    
 }
 
 // @argument_count: argc as provided in main
@@ -72,22 +65,37 @@ int testHashingWrapper(int argument_count, char **argument_list) {
     if (param_flag == "linear") {
       // Uncomment below when you have implemented linear probing.
         HashTableLinear<string> linear_probing_table;
-
         TestFunctionForHashTable(linear_probing_table, words_filename, query_filename);
+        std::cout << "number_of_elements: " << linear_probing_table.numberOfElements() << std::endl;
+        std::cout << "size_of_table: " << linear_probing_table.tableSize() << std::endl;
+        std::cout << "load_factor: " << linear_probing_table.getLoadFactor() << std::endl;
+        std::cout << "collisions: " << linear_probing_table.numberOfCollisions() << std::endl;
+        float avg_collisions = static_cast<float>(linear_probing_table.numberOfCollisions()) / static_cast<float>(linear_probing_table.numberOfElements());
+        std::cout << "avg_collisions: " << avg_collisions << std::endl;
 
     }
     else if (param_flag == "quadratic") {
         HashTable<string> quadratic_probing_table;
-
         TestFunctionForHashTable(quadratic_probing_table, words_filename, query_filename);
+        std::cout << "number_of_elements: " << quadratic_probing_table.numberOfElements() << std::endl;
+        std::cout << "size_of_table: " << quadratic_probing_table.tableSize() << std::endl;
+        std::cout << "load_factor: " << quadratic_probing_table.getLoadFactor() << std::endl;
+        std::cout << "collisions: " << quadratic_probing_table.numberOfCollisions() << std::endl;
+        float avg_collisions = static_cast<float>(quadratic_probing_table.numberOfCollisions()) / static_cast<float>(quadratic_probing_table.numberOfElements());
+        std::cout << "avg_collisions: " << avg_collisions << std::endl;
         
     }
     else if (param_flag == "double") {
         cout << "r_value: " << R << endl;
         // Uncomment below when you have implemented double hashing.
         HashTableDouble<string> double_probing_table;
-
         TestFunctionForHashTable(double_probing_table, words_filename, query_filename);
+        std::cout << "number_of_elements: " << double_probing_table.numberOfElements() << std::endl;
+        std::cout << "size_of_table: " << double_probing_table.tableSize() << std::endl;
+        std::cout << "load_factor: " << double_probing_table.getLoadFactor() << std::endl;
+        std::cout << "collisions: " << double_probing_table.numberOfCollisions() << std::endl;
+        float avg_collisions = static_cast<float>(double_probing_table.numberOfCollisions()) / static_cast<float>(double_probing_table.numberOfElements());
+        std::cout << "avg_collisions: " << avg_collisions << std::endl;
         
     }
     else {
