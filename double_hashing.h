@@ -111,7 +111,7 @@ private:
         
         bool IsActive(size_t current_pos) const
         { return array_[current_pos].info_ == ACTIVE; }
-        
+    // Linear Probing
     size_t FindPos(const HashedObj & x) const {
         static std::hash<HashedObj> hf;
         size_t count = 1;

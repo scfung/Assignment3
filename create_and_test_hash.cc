@@ -1,4 +1,4 @@
-// YOUR NAME.
+// Stanley Fung
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -109,6 +109,7 @@ int testHashingWrapper(int argument_count, char **argument_list) {
 // WE WILL NOT USE YOUR MAIN IN TESTING. DO NOT CODE FUNCTIONALITY INTO THE
 // MAIN. WE WILL DIRECTLY CALL testHashingWrapper. ALL FUNCTIONALITY SHOULD BE
 // THERE. This main is only here for your own testing purposes.
+
 int main(int argc, char **argv) {
     if (argc != 4 and argc != 5) {
 	cout << "Usage: " << argv[0]
@@ -121,3 +122,4 @@ int main(int argc, char **argv) {
     testHashingWrapper(argc, argv);
     return 0;
 }
+

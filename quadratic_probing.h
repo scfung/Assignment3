@@ -1,3 +1,4 @@
+//Stanley Fung
 #ifndef QUADRATIC_PROBING_H
 #define QUADRATIC_PROBING_H
 
@@ -97,16 +98,21 @@ public:
         return true;
     }
     
+    //Used to find the number of elements in hash table
     size_t numberOfElements(){ return current_size_;}
     
+    //Used to find the size of the whole table
     size_t tableSize(){return array_.size();}
     
+    //Finds the number of probes needed to place a value in the hash table
     size_t numberOfProbes(){
         return probes;
     }
     
+    //Finds the number of collisions needed to place a value in the hash table
     size_t numberOfCollisions(){return collisions;}
-        
+    
+    //Checks how full the table is, relative to the table's size
     float getLoadFactor(){
         return static_cast<float>(current_size_) / static_cast<float>(array_.size());
     }
@@ -134,6 +140,7 @@ private:
     bool IsActive(size_t current_pos) const
     { return array_[current_pos].info_ == ACTIVE; }
 
+    //Finds a place 
     size_t FindPos(const HashedObj & x) const {
         size_t offset = 1;
         size_t current_pos = InternalHash(x);
