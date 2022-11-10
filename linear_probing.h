@@ -16,7 +16,6 @@
 
 template <typename HashedObj>
 
-
 class HashTableLinear{
 public:
     enum EntryType {ACTIVE, EMPTY, DELETED};
@@ -112,19 +111,19 @@ private:
     
     size_t FindPos(const HashedObj &x) const{
         size_t offset = 1;
-        size_t current_pos = this->InternalHash(x);
-        
-        while(this->array_[current_pos].info_ != this->EMPTY and this->array_[current_pos].element_ != x)
+        size_t current_pos = InternalHash(x);
+    
+        while(this->array_[current_pos].info_ != EMPTY and array_[current_pos].element_ != x)
         {
             current_pos += offset;
             this->collisions++;
             offset++;
-            if(current_pos >= this->array_.size())
+            if(current_pos >= array_.size())
             {
-                current_pos -= this->array_.size();
+                current_pos -= array_.size();
             }
         }
-        this->probes = std::move(offset);
+        probes = std::move(offset);
         offset = 0;
         return current_pos;
     }

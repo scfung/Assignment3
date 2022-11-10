@@ -35,6 +35,8 @@ void TestFunctionForHashTable(HashTableType &hash_table,
     ifstream query;
     query.open(query_filename);
     
+    std::cout << std::endl;
+    
     while(query >> insert_line){
         if(hash_table.Contains(insert_line) == true){
             std::cout << insert_line << "Found " << hash_table.numberOfProbes() << std::endl;
