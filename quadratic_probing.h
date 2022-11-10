@@ -56,7 +56,6 @@ public:
     //Empties hash table and sets values back to default
     void MakeEmpty() {
         current_size_ = 0;
-        collisions = 0;
         probe_num = 1;
         for (auto & entry : array_)
             entry.info_ = EMPTY;
@@ -117,7 +116,7 @@ public:
     }
     
     //Finds the number of collisions needed to place a value in the hash table
-    size_t numberOfCollisions(){return collisions;}
+    size_t numberOfCollisions(){return total_collisions;}
     
     //Checks how full the table is, relative to the table's size
     float getLoadFactor(){
@@ -142,7 +141,7 @@ private:
 
     std::vector<HashEntry> array_;
     size_t current_size_;
-    mutable size_t collisions;
+    mutable size_t total_collisions;
     mutable size_t probe_num = 1;
     
     //Checks if the an element is currently in the hash table
@@ -154,7 +153,7 @@ private:
         size_t offset = 1;
         size_t count = 1;
         size_t current_pos = InternalHash(x);
-      
+        size_t collisions = 0;
         while (array_[current_pos].info_ != EMPTY && array_[current_pos].element_ != x) {
             current_pos += offset;  // Compute ith probe.
             offset += 2;
@@ -164,6 +163,7 @@ private:
                 current_pos -= array_.size();
         }
         probe_num = count;
+        total_collisions += collisions;
         offset = 1;
         return current_pos;
   }
