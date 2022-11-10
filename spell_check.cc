@@ -12,21 +12,22 @@
 // haven't implemented double hashing.
 #include "quadratic_probing.h"
 using namespace std;
-
+template <typename HashTableType>
 // You can add more functions here.
 
 // Creates and fills double hashing hash table with all words from
 // dictionary_file
+
 HashTable<string> MakeDictionary(const string &dictionary_file) {
     HashTable<string> dictionary_hash;
   // Fill dictionary_hash.
-    ifstream words(dictionary_file);
+    ifstream words;
+    words.open(dictionary_file);
     std::string insert_line;
     
-    while(words >> insert_line){
-        if(insert_line.length() > 0){
-            dictionary_hash.Insert(insert_line);
-        }
+    while(!(words.eof())){
+        words>>insert_line;
+        dictionary_hash.Insert(insert_line);
     }
     return dictionary_hash;
 }
@@ -35,89 +36,76 @@ HashTable<string> MakeDictionary(const string &dictionary_file) {
 // misspelled and prints out possible corrections
 void SpellChecker(const HashTable<string>& dictionary, const string &document_file)
 {
-    ifstream query(document_file);
-    std::string insert_line;
-    
-    while(query >> insert_line)
+    ifstream query;
+    query.open(document_file);
+    std::string insert_line, current;
+    while(!(query.eof()))
     {
-        for(int i = 0; i < insert_line.length(); i++)
+        query>>insert_line;
+        for(int i = 0; i < insert_line.size(); i++)
         {
-            if(isalpha(insert_line[i]))
+            if(ispunct(insert_line[i]))
             {
-                insert_line[i] = tolower(insert_line[i]);
+                insert_line.erase(i--, 1);
             }
-            else if('\'' == insert_line[i])
+        }
+        
+        for(int i = 0; i < insert_line.size(); i++)
+        {
+            insert_line[i] = tolower(insert_line[i]);
+        }
+        
+        bool result = false;
+        result = dictionary.Contains(insert_line);
+        if(result == true)
+        {
+            std::cout << insert_line << "is CORRECT" << std::endl;
+        }
+        while(result == false)
+        {
+            std::cout << insert_line << " is INCORRECT" << std::endl;
+            //swap
+            for(int i = 0; i < insert_line.length() and result == false; i++)
             {
-                while(i < insert_line.length())
+                std::string original = insert_line;
+                swap(insert_line[i], insert_line[i+1]);
+                std::cout << "** " << original << " -> " << insert_line << " ** case C" << std::endl;
+                if(dictionary.Contains(insert_line) == true)
+                    result = true;
+                else
+                    swap(insert_line[i], insert_line[i+1]);
+                
+            }
+            //add
+            for(int i = 0; i < insert_line.length() and result == false; i++)
+            {
+                std::string original = insert_line;
+                for(int j = 97; j < 123; j++)
                 {
-                    insert_line.erase(insert_line.begin()+i);
+                    insert_line.insert(i,1,(char)j);
+                    std::cout << "** " << original << " -> " << insert_line << " ** case A" << std::endl;
+                    if(dictionary.Contains(insert_line) == true)
+                        result = true;
+                    else
+                        insert_line = original;
                 }
+                    
             }
-            else{
-                insert_line.erase(insert_line.begin() + i);
-                --i;
-            }
-        }
-    }
-    
-    if(insert_line.length() == 0){
-        std::cout << "Skipping word" << std::endl;
-    }
-    else if(!dictionary.Contains(insert_line)){
-        bool found_match = false;
-        std::cout << insert_line << " is INCORRECT" << std::endl;
-        
-        //Swap
-        for(int i = 0; !found_match and (i < insert_line.length()-1); i++){
-            std::string original_1 = insert_line;
-            std::swap(insert_line[i], insert_line[i+1]);
-            std::cout << "** " << original_1 << " -> " << insert_line << " ** case C" << std::endl;
-            if(dictionary.Contains(insert_line)){
-                found_match = true;
-            }
-            else{
-                std::swap(insert_line[i], insert_line[i+1]);
+            //remove
+            for(int i = 0; i < insert_line.length() and result == false; i++)
+            {
+                std::string original = insert_line;
+                insert_line.erase(i,1);
+                std::cout << "** " << original << " -> " << insert_line << " ** case B" << std::endl;
+                if(dictionary.Contains(insert_line) == true)
+                    result = true;
+                else
+                    insert_line = original;
             }
         }
-        
-        //Single Delete
-        for(int i = 0; !found_match and i < insert_line.length(); i++){
-            std::string original_2 = insert_line;
-            char deleted_char = insert_line[i];
-            auto itr = insert_line.begin() + i;
-            insert_line.erase(itr);
-            std::cout << "** " << original_2 << " -> " << insert_line << " ** case B" << std::endl;
-            if(dictionary.Contains(insert_line)){
-                found_match = true;
-            }
-            else{
-                insert_line.insert(itr, deleted_char);
-            }
-        }
-        
-        //Single Insert
-        for(auto iterate = insert_line.begin(); !found_match and iterate != insert_line.end()+1; advance(iterate, 1)){
-            std::string original_3 = insert_line;
-            for(char inserted_char = 'a'; ! found_match and (inserted_char <= 'z'); inserted_char++){
-                insert_line.insert(iterate, inserted_char);
-                std::cout << "** " << original_3 << " ->" << insert_line << " ** case A" << std::endl;
-                if(dictionary.Contains(insert_line)){
-                    found_match = true;
-                }
-                else{
-                    insert_line.erase(iterate);
-                }
-            }
-        }
-        if(!found_match){
-            std::cout << "No match found" << std::endl;
-        }
-    else{
-        std::cout << insert_line << " is CORRECT" << std::endl;
-        }
-        
     }
 }
+
 
 // @argument_count: same as argc in main
 // @argument_list: save as argv in main.

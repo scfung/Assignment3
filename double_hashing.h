@@ -8,15 +8,10 @@
 #ifndef double_hashing_h
 #define double_hashing_h
 
+#include "quadratic_probing.h"
 #include <vector>
 #include <algorithm>
 #include <functional>
-
-namespace {
-// Internal method to return a prime number at least as large as n.
-int NextPrime(size_t n);
-
-}  // namespace
 
 // Double Hashing Implementation
 template <typename HashedObj>
@@ -79,20 +74,10 @@ public:
     
     size_t numberOfElements(){return current_size_;}
     
-    size_t tableSize(){return array_.capacity();}
+    size_t tableSize(){return array_.size();}
     
-    size_t numberOfProbes(const HashedObj &x) const{
-        size_t i = 1;
-        size_t starting_pos = InternalHash(x);
-        size_t probe = starting_pos;
-        size_t number_of_probes = 1;
-        
-        while(array_[probe].info_ != EMPTY and array_[probe].element_ != x){
-            ++number_of_probes;
-            probe = (starting_pos + (i * InternalHash2(x))) % array_.capacity();
-            ++i;
-        }
-        return number_of_probes;
+    size_t numberOfProbes(){
+        return probes;
     }
     
     size_t numberOfCollisions(){
@@ -100,7 +85,7 @@ public:
     }
     
     float getLoadFactor(){
-        return static_cast<float>(numberOfElements()) / static_cast<float>(tableSize());
+        return static_cast<float>(current_size_) / static_cast<float>(array_.size());
     }
         
 private:
@@ -119,23 +104,28 @@ private:
         std::vector<HashEntry> array_;
         size_t current_size_;
         mutable size_t collisions = 0;
+        mutable size_t probes;
         size_t R = 73;
         
         bool IsActive(size_t current_pos) const
         { return array_[current_pos].info_ == ACTIVE; }
         
     size_t FindPos(const HashedObj & x) const {
-            size_t offset = 1;
-            size_t current_pos = InternalHash(x);
-            size_t probe = current_pos;
+        static std::hash<HashedObj> hf;
+        size_t count = 1;
+        size_t offset = count*(R-(hf(x) % R));
+        size_t current_pos = InternalHash(x);
             
-            while (array_[current_pos].info_ != EMPTY && array_[current_pos].element_ != x) {
-                ++collisions;
-                probe = (current_pos + (offset * InternalHash2(x))) % array_.capacity();
-                offset++;
-            }
-        return probe;
+        while (array_[current_pos].info_ != EMPTY && array_[current_pos].element_ != x) {
+            ++collisions;
+            current_pos += offset;
+            count++;
+            if(current_pos >= array_.size())
+                current_pos -= array_.size();
         }
+        probes = std::move(offset);
+        return current_pos;
+    }
         
         void Rehash() {
             std::vector<HashEntry> old_array = array_;
@@ -155,10 +145,6 @@ private:
         size_t InternalHash(const HashedObj & x) const {
             static std::hash<HashedObj> hf;
             return hf(x) % array_.size( );
-        }
-        size_t InternalHash2(const HashedObj & x) const{
-            static std::hash<HashedObj> hf;
-            return R - (hf(x) % R);
         }
     };
 #endif /* double_hashing_h */

@@ -22,20 +22,25 @@ void TestFunctionForHashTable(HashTableType &hash_table,
 			      const string &words_filename,
 			      const string &query_filename) {
     //..Insert your own code
-    ifstream words(words_filename), query(query_filename);
+    ifstream words;
+    words.open(words_filename);
     std::string insert_line;
     
-    while(words >> insert_line){
-        if(insert_line.length() > 0){
-            hash_table.Insert(insert_line);
-        }
+    while(!(words.eof()))
+    {
+        words>>insert_line;
+        hash_table.Insert(insert_line);
     }
+    insert_line = "";
+    ifstream query;
+    query.open(query_filename);
+    
     while(query >> insert_line){
-        if(hash_table.Contains(insert_line)){
-            std::cout << insert_line << "Found " << hash_table.numberOfProbes(insert_line) << std::endl;
+        if(hash_table.Contains(insert_line) == true){
+            std::cout << insert_line << "Found " << hash_table.numberOfProbes() << std::endl;
         }
         else{
-            std::cout << insert_line << "Not_Found " << hash_table.numberOfProbes(insert_line) << std::endl;
+            std::cout << insert_line << "Not_Found " << hash_table.numberOfProbes() << std::endl;
         }
     }
 }
