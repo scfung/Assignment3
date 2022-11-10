@@ -10,15 +10,15 @@
 
 // You can change to quadratic probing if you
 // haven't implemented double hashing.
-#include "double_hashing.h"
+#include "quadratic_probing.h"
 using namespace std;
 
 // You can add more functions here.
 
 // Creates and fills double hashing hash table with all words from
 // dictionary_file
-HashTableDouble<string> MakeDictionary(const string &dictionary_file) {
-    HashTableDouble<string> dictionary_hash;
+HashTable<string> MakeDictionary(const string &dictionary_file) {
+    HashTable<string> dictionary_hash;
   // Fill dictionary_hash.
     ifstream words(dictionary_file);
     std::string insert_line;
@@ -33,7 +33,7 @@ HashTableDouble<string> MakeDictionary(const string &dictionary_file) {
 
 // For each word in the document_file, it checks the 3 cases for a word being
 // misspelled and prints out possible corrections
-void SpellChecker(const HashTableDouble<string>& dictionary, const string &document_file)
+void SpellChecker(const HashTable<string>& dictionary, const string &document_file)
 {
     ifstream query(document_file);
     std::string insert_line;
@@ -127,12 +127,12 @@ int testSpellingWrapper(int argument_count, char** argument_list) {
     const string dictionary_filename(argument_list[2]);
 
     // Call functions implementing the assignment requirements.
-    HashTableDouble<string> dictionary = MakeDictionary(dictionary_filename);
+    HashTable<string> dictionary = MakeDictionary(dictionary_filename);
     SpellChecker(dictionary, document_filename);
 
     return 0;
 }
-
+/*
 // Sample main for program spell_check.
 // WE WILL NOT USE YOUR MAIN IN TESTING. DO NOT CODE FUNCTIONALITY INTO THE
 // MAIN. WE WILL DIRECTLY CALL testSpellingWrapper. ALL FUNCTIONALITY SHOULD BE
@@ -148,3 +148,4 @@ int main(int argc, char** argv) {
   
   return 0;
 }
+*/
