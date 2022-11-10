@@ -46,6 +46,14 @@ void TestFunctionForHashTable(HashTableType &hash_table,
             std::cout << insert_line << " Not_Found " << hash_table.numberOfProbes() << std::endl;
         }
     }
+    
+    std::cout << "number_of_elements: " << hash_table.numberOfElements() << std::endl;
+    std::cout << "size_of_table: " << hash_table.tableSize() << std::endl;
+    std::cout << "load_factor: " << hash_table.getLoadFactor() << std::endl;
+    std::cout << "collisions: " << hash_table.numberOfCollisions() << std::endl;
+    float avg_collisions = static_cast<float>(hash_table.numberOfCollisions()) / static_cast<float>(hash_table.numberOfElements());
+    std::cout << "avg_collisions: " << avg_collisions << std::endl;
+    
 }
 
 // @argument_count: argc as provided in main

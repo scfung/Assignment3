@@ -68,21 +68,18 @@ void SpellChecker(const HashTableType& dictionary, const string &document_file)
         {
             std::cout << insert_line << " is INCORRECT" << std::endl;
             output = Swap(dictionary, insert_line);
-            std::cout << "** " << insert_line << " -> " << output << " case C" << std::endl;
             if(output != "Incorrect")
             {
                 result = true;
                 break;
             }
             output = Add(dictionary, insert_line);
-            std::cout << "** " << insert_line << " -> " << output << " case A" << std::endl;
             if(output != "Incorrect")
             {
                 result = true;
                 break;
             }
             output = Remove(dictionary, insert_line);
-            std::cout << "** " << insert_line << " -> " << output << " case B" << std::endl;
             if(output != "Incorrect")
             {
                 result = true;
@@ -101,11 +98,13 @@ std::string Swap(HashTableType &hash_table, std::string changed_word)
     for(int i = 0; i < changed_word.length(); i++)
     {
         std::swap(changed_word[i], changed_word[i+1]);
+        std::cout << "** " << original << " -> " << changed_word << " case C" << std::endl;
         if(hash_table.Contains(changed_word) == true)
             return changed_word;
         changed_word = original;
     }
     return "Incorrect";
+  
 }
 
 template <typename HashTableType>
@@ -117,6 +116,7 @@ std::string Add(HashTableType &hash_table, std::string changed_word)
         for(int j = 97; j < 123; j++)
         {
             changed_word.insert(i, 1, (char)j);
+            std::cout << "** " << original << " -> " << changed_word << " case A" << std::endl;
             if(hash_table.Contains(changed_word) == true)
                 return changed_word;
             changed_word = original;
@@ -132,6 +132,7 @@ std::string Remove(HashTableType &hash_table, std::string changed_word)
     for(int i = 0; i < changed_word.length(); i++)
     {
         changed_word.erase(i, 1);
+        std::cout << "** " << original << " -> " << changed_word << " case B" << std::endl;
         if(hash_table.Contains(changed_word) == true)
             return changed_word;
         changed_word = original;
