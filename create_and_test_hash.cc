@@ -37,12 +37,14 @@ void TestFunctionForHashTable(HashTableType &hash_table,
     
     std::cout << std::endl;
     
-    while(query >> insert_line){
+    while(!(query.eof()))
+    {
+        query>>insert_line;
         if(hash_table.Contains(insert_line) == true){
-            std::cout << insert_line << "Found " << hash_table.numberOfProbes() << std::endl;
+            std::cout << insert_line << " Found " << hash_table.numberOfProbes() << std::endl;
         }
         else{
-            std::cout << insert_line << "Not_Found " << hash_table.numberOfProbes() << std::endl;
+            std::cout << insert_line << " Not_Found " << hash_table.numberOfProbes() << std::endl;
         }
     }
 }

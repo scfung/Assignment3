@@ -12,7 +12,6 @@
 // haven't implemented double hashing.
 #include "quadratic_probing.h"
 using namespace std;
-template <typename HashTableType>
 // You can add more functions here.
 
 // Creates and fills double hashing hash table with all words from
