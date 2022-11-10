@@ -125,7 +125,7 @@ private:
                 current_pos -= array_.size();
             }
         }
-        probes = std::move(offset);
+        probes = offset;
         offset = 1;
         return current_pos;
     }

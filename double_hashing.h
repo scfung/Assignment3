@@ -123,10 +123,10 @@ private:
             current_pos += offset;
             ++collisions;
             count++;
-            probes++;
             if(current_pos >= array_.size())
                 current_pos -= array_.size();
         }
+        probes = count;
         offset = 0;
         return current_pos;
     }

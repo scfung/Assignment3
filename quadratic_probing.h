@@ -149,10 +149,10 @@ private:
             current_pos += offset;  // Compute ith probe.
             offset += 2;
             collisions++;
-            probes++;
             if (current_pos >= array_.size())
                 current_pos -= array_.size();
         }
+        probes = offset;
         offset = 1;
         return current_pos;
   }
