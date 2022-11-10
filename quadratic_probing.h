@@ -41,8 +41,9 @@ class HashTable {
 public:
     enum EntryType {ACTIVE, EMPTY, DELETED};
     
-    explicit HashTable(size_t size = 101) : array_(NextPrime(size))
-    { MakeEmpty(); }
+    explicit HashTable(size_t size = 101) : array_(NextPrime(size)){
+        MakeEmpty();
+    }
     
     bool Contains(const HashedObj & x) const {
         return IsActive(FindPos(x));
@@ -103,7 +104,7 @@ public:
         int currentPosition = InternalHash(x);
         int numberProbes = 1;
         
-        while(array_[currentPosition].info+ != EMPTY and array_[currentPosition].element_ != x){
+        while(array_[currentPosition].info_ != EMPTY and array_[currentPosition].element_ != x){
             ++numberProbes;
             currentPosition = offset;
             offset += 2;
@@ -120,7 +121,7 @@ public:
         return static_cast<float>(numberOfElements()) / static_cast<float>(tableSize());
     }
     
-}
+
 
 private:
     struct HashEntry {

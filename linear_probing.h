@@ -78,7 +78,7 @@ class HashTableLinear{
     }
     
     int numberOfElements(){
-        return current_size_;
+        return static_cast<int>(current_size_);
     }
     
     int tableSize(){
