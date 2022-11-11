@@ -89,4 +89,25 @@
 **How to run**
   
 -Using Make file:
+
+-all: 	
+	  make $(PROGRAM_0)
+		make $(PROGRAM_1)
+
+-run1linear: 	
+		./linear_probing.h words.txt query_words.txt linear
+
+-run1quadratic: 	
+		./quadratic_probing.h words.txt query_words.txt quadratic
+
+-run1double: 	
+		./double_hashing.h words.txt query_words.txt double
+
+-run2short: 	
+		./spell_checker.cc document1_short.txt wordsEn.txt
+
+-run2: 	
+		./spell_checker.cc document1.txt wordsEn.txt
   
+**Input File**
+
