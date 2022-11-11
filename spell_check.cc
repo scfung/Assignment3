@@ -8,6 +8,7 @@
 #include <cstdlib>
 #include <cctype>
 #include <sstream>
+#include <algorithm>
 
 // You can change to quadratic probing if you
 // haven't implemented double hashing.
@@ -99,7 +100,7 @@ std::string Swap(HashTableType &hash_table, std::string changed_word)
     for(int i = 0; i < changed_word.length(); i++)
     {
         std::swap(changed_word[i], changed_word[i+1]);
-       
+        
         if(hash_table.Contains(changed_word) == true)
         {
             std::cout << "** " << original << " -> " << changed_word << " ** case C" << std::endl;
