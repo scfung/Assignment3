@@ -118,6 +118,7 @@ private:
     size_t current_size_;
     mutable size_t total_collisions = 0;
     mutable size_t probe_num = 1;
+    mutable size_t collisions = 0;
     
     //Checks if the an element is currently in the hash table
     bool IsActive(size_t current_pos) const
@@ -127,7 +128,6 @@ private:
         size_t offset = 1;
         size_t current_pos = InternalHash(x);
         size_t count = 1;
-        size_t collisions = 0;
         while(array_[current_pos].info_ != EMPTY and array_[current_pos].element_ != x)
         {
             current_pos += offset;
@@ -140,6 +140,7 @@ private:
             }
         }
         total_collisions += collisions;
+        collisions = 0;
         probe_num = count;
         offset = 1;
         return current_pos;
@@ -162,7 +163,7 @@ private:
     //Internal Hash function to help find a place for an element to be put in the hash table
     size_t InternalHash(const HashedObj & x) const {
         static std::hash<HashedObj> hf;
-        return hf(x) % array_.size( );
+        return (hf(x) + collisions) % array_.size( );
   }
 };
 
