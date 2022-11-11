@@ -109,5 +109,10 @@
 -run2: 	
 		./spell_checker.cc document1.txt wordsEn.txt
   
-**Input File**
+**Input Files**
 
+-"document1.txt", "document1_short.txt", "query_words.txt", "wordsEn.txt", "words.txt"
+
+**Output File**
+	
+-"expected_output.txt"
