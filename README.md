@@ -34,4 +34,27 @@
 
 **linear_probing.h only**
 
+-size_t InternalHash(const HashedObj &x) const - Hash function that uses linear probing to find spaces to put elements in the hash table.
+
+-size_t FindPos(const HashedObj &x) const - Function that finds a space for an element to fit it and finds the number of collisions and probes while doing so.
+
+**quadratic_probing.h**
+
+-bool IsPrime(size_t n) - Function used to test if a positive number is prime or not.
+
+-int NextPrime(size_t n) - Function used to find a prime number that is greater or equal to n, while using the IsPrime function.
+
+-size_t FindPos(const HashedObj &x) const - Function that finds a space for an element to fit it and finds the number of collisions and probes while doing so.
+
+-size_t InternalHash(const HashedObj &x) - Hash function that uses quadratic probing to find spaces to put elements in the hash table.
+
+**double_hashing.h**
+
+-size_t FindPos(const HashedObj &x) - Function that finds a space for an element that uses double hashing and finds the number of collisions and probes while doing so.
+
+-size_t FindPos(const HashedObj &x) - Same functionality as in linear_probing.h
+
+**spell_check.cc**
+
 -
+
