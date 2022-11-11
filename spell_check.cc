@@ -67,6 +67,12 @@ void SpellChecker(const HashTableType& dictionary, const string &document_file)
         while(result == false)
         {
             std::cout << insert_line << " is INCORRECT" << std::endl;
+            output = Swap(dictionary, insert_line);
+            if(output != "Incorrect")
+            {
+                result = true;
+                break;
+            }
             output = Add(dictionary, insert_line);
             if(output != "Incorrect")
             {
@@ -74,12 +80,6 @@ void SpellChecker(const HashTableType& dictionary, const string &document_file)
                 break;
             }
             output = Remove(dictionary, insert_line);
-            if(output != "Incorrect")
-            {
-                result = true;
-                break;
-            }
-            output = Swap(dictionary, insert_line);
             if(output != "Incorrect")
             {
                 result = true;
@@ -99,6 +99,7 @@ std::string Swap(HashTableType &hash_table, std::string changed_word)
     for(int i = 0; i < changed_word.length(); i++)
     {
         std::swap(changed_word[i], changed_word[i+1]);
+       
         if(hash_table.Contains(changed_word) == true)
         {
             std::cout << "** " << original << " -> " << changed_word << " ** case C" << std::endl;
