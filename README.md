@@ -70,6 +70,23 @@
   
 **create_and_test_hash**
   
-void TestFunctionForHashTable(HashTableType &hash_table, const string &words_filename,  const string &query_filename) - Function that constructs a hash table from a file and tests a hash table from a file. Finds the number of elements, size of the table, load factor, number of collisions, and average collisions when creating the hash table. The function also if a word is found or not and the number of probes needed to do so. 
+-void TestFunctionForHashTable(HashTableType &hash_table, const string &words_filename,  const string &query_filename) - Function that constructs a hash table from a file and tests a hash table from a file. Finds the number of elements, size of the table, load factor, number of collisions, and average collisions when creating the hash table. The function also if a word is found or not and the number of probes needed to do so. 
   
-
+-int testHashingWrapper(int argument_count, char** argument_list) - Function that tests if linear probing, quadratic probing, and double hashing works properly. 
+  
+**Bugs**
+  
+-The SpellWrapper function would miss out on some words and include numbers within the set of accepted words.
+  
+-The probes being outputted for linear probing would be lower than the expected values. 
+  
+-The collisions and the average collisions would exceed expected values.
+  
+-The separate functions made in spell_checker.cc, Swap, Add, and Remove, would not run, due to unknown data type to the complier.
+  
+-All of the table statistics would print out as default values, where the values are from a new hash table.
+  
+**How to run**
+  
+-Using Make file:
+  
