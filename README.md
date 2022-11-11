@@ -56,5 +56,20 @@
 
 **spell_check.cc**
 
--
+-HashTableDouble<string> MakeDictionary(const string &dictionary_file) - Function that populates the hash table with double hashing and the dictionary_file and returns the resulting hash table.
+
+-void SpellChecker(const HashTableType& dictionary, const string &document_file) - Function that takes the words that are considered proper words and a file that needs to be checked for correct spelling. The function decides if a word is correct or not, then performs three set operations. The function can perform a swap between two characters on a word, add a letter to the word, or remove a letter/puncuation from a word.  The program outputs the possible corrections that the user might be looking for.
+  
+-std::string Swap(HashTableType &hash_table, std::string changed_word) - Iterates throught the word and keeps swapping two characters until the end of the loop is reached or one of the swapping of characters leads to correct word. Outputs correct word, or "Incorrect" if loop is finished.
+  
+-std::string Add(HashTableType &hash_table, std::string changed_word) - Iterates with a nested for loop to add letters to the word, one at a time, until the end of the loop or if a word with an added character is found. Outputs correct word, or "Incorrect" if loop is finished.
+  
+-std::string Remove(HashTableType &hash_table, std::string changed_word) - Iterates with a for loop and erases from the word, one letter at a time, until the end of the loop or if a correct word is found. Outputs correct word, or "Incorrect" if loop is finished.
+  
+-int testSpellingWrapper(int argument_count,  char** argument_list) - Function used to test SpellChecker function and MakeDictionary function.
+  
+**create_and_test_hash**
+  
+void TestFunctionForHashTable(HashTableType &hash_table, const string &words_filename,  const string &query_filename) - Function that constructs a hash table from a file and tests a hash table from a file. Finds the number of elements, size of the table, load factor, number of collisions, and average collisions when creating the hash table. The function also if a word is found or not and the number of probes needed to do so. 
+  
 
